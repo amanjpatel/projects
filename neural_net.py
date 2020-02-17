@@ -20,14 +20,23 @@
 
 import numpy.random
 import numpy as np
-#array = numpy.random.uniform(0,1,(10,10))
-array = np.array([[.3, .5, .8, .5, .3], [.5, .8, .5, .8, .5], [.8, .5, .3, .5, .8]])
+array = numpy.random.uniform(0,1,(10,10))
+#array = np.array([[.3, .5, .8, .5, .3], [.5, .8, .5, .8, .5], [.8, .5, .3, .5, .8]])
 print(array)
-# fix lack of function on rightmost and bottommost values
+# make exception on rightmost and bottommost values
+x_dim = 10
+y_dim = 10
 for k in range(0,100):
-    for x in range(0,4):
-        for y in range(0,2):
-            averageSurround = (array[y + 1, x] + array[y - 1, x] + array[y, x + 1] + array[y, x - 1] + array[y + 1, x + 1] +
+    for x in range(0,x_dim):
+        for y in range(0,y_dim):
+            if x == (x_dim-1) and y != y_dim-1:
+                averageSurround = (array[y + 1, x] + array[y - 1, x] + array[y, x - 1] + array[y - 1, x - 1] + array[y + 1, x - 1]) / 5
+            elif y == (y_dim-1) and x != x_dim-1:
+                averageSurround = (array[y - 1, x] + array[y, x + 1] + array[y, x - 1] + array[y - 1, x - 1] + array[y - 1, x + 1]) / 5
+            elif x == (x_dim-1) and y == (y_dim-1):
+                averageSurround = (array[y - 1, x] + array[y, x - 1] + array[y - 1, x - 1]) / 3
+            elif x != x_dim and y != y_dim:
+                averageSurround = (array[y + 1, x] + array[y - 1, x] + array[y, x + 1] + array[y, x - 1] + array[y + 1, x + 1] +
                            array[y - 1, x - 1] + array[y - 1, x + 1] + array[y + 1, x - 1]) / 8
             if array[y,x] > averageSurround:
                 array[y,x] = (array[y,x])**0.5
@@ -40,6 +49,3 @@ edgeOrient = 0
 # edge motion
 # shape
 # shape motion
-
-
-    # Jazz comment
