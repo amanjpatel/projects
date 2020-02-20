@@ -1,23 +1,3 @@
-#must be updating spike rate at all times
-#must keep track of neurotransmitter in synapse
-#must keep track of how much neurotransmitter is left in presynaptic neuron
-#must know how many ion channels on synapse
-#must be able to control either neurotransmitter or number of ion channels
-#must have a free neurotransmitter decay rate
-#must have a specified spike length
-
-# center-surround
-# orientation
-# orientation, motion, direction, position
-# orientation, motion, direction, length, position
-#
-# initial dimensions: (pixel x-value, pixel y-value, shading, time)
-# second-step dimensions: (edge x-coordinate, edge y-coordinate, edge z-coordinate, edge motion vector x-component,
-# edge motion vector y-component, edge motion vector z-component, edge length, edge width, edge depth)
-# third-intermediate dimensions: (object name, coordinated movement)
-# final dimensions: (gesture word)
-# final final dimensions: (sentences)
-
 import numpy.random
 import numpy as np
 from PIL import Image
@@ -69,3 +49,24 @@ Image.Image.show(fin)
 # edge motion
 # shape
 # shape motion
+
+
+#must be updating spike rate at all times
+#must keep track of neurotransmitter in synapse
+#must keep track of how much neurotransmitter is left in presynaptic neuron
+#must know how many ion channels on synapse
+#must be able to control either neurotransmitter or number of ion channels
+#must have a free neurotransmitter decay rate
+#must have a specified spike length
+
+# center-surround
+# orientation
+# orientation, motion, direction, position
+# orientation, motion, direction, length, position
+#
+# initial dimensions: (pixel x-value, pixel y-value, shading, time)
+# second-step dimensions: (edge x-coordinate, edge y-coordinate, edge z-coordinate, edge motion vector x-component,
+# edge motion vector y-component, edge motion vector z-component, edge length, edge width, edge depth)
+# third-intermediate dimensions: (object name, coordinated movement)
+# final dimensions: (gesture word)
+# final final dimensions: (sentences)
