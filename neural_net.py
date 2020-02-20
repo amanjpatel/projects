@@ -20,12 +20,27 @@
 
 import numpy.random
 import numpy as np
-array = numpy.random.uniform(0,1,(10,10))
+from PIL import Image
+
+im = Image.open('20px.png')
+array = np.array(im)
+for x in range(0,20):
+    for y in range(0,20):
+        rgb = array[y,x]
+        bw = 0
+        for z in range(0,3):
+            rgb_z = int(rgb[z])
+            bw += rgb_z
+        bwnum = (bw/(3*255))
+        array[y,x] = bwnum
+#array = numpy.random.uniform(0,1,(10,10))
 #array = np.array([[.3, .5, .8, .5, .3], [.5, .8, .5, .8, .5], [.8, .5, .3, .5, .8]])
+#array = np.array([[.01, .02, .01, .03, .01], [0.02, 0.03, 0.01, 0.02, 0.01], [.7, .7, .4, .7, .2]])
+
 print(array)
-# make exception on rightmost and bottommost values
-x_dim = 10
-y_dim = 10
+'''
+x_dim = 20
+y_dim = 20
 for k in range(0,100):
     for x in range(0,x_dim):
         for y in range(0,y_dim):
@@ -43,9 +58,10 @@ for k in range(0,100):
             else:
                 array[y,x] = (array[y,x])**2
 print(array)
-# orientation states: 8 possible orientations for a 4-pixel portion of larger array
-edgeOrient = 0
+
+# orientation states
 # edge length
 # edge motion
 # shape
 # shape motion
+'''
