@@ -1,8 +1,9 @@
 import numpy.random
 import numpy as np
 from PIL import Image
+import matplotlib.pyplot as plt
 
-im = Image.open('20px.png')
+im = Image.open('emoticon.png')
 im_arr = np.array(im)
 print(im_arr.shape)
 
@@ -41,9 +42,10 @@ for k in range(0,5):
             else:
                 array[y,x] = (array[y,x])**100
 print(array)
-fin = Image.fromarray(array)
-Image.Image.show(fin)
-
+#fin = Image.fromarray(array)
+#Image.Image.show(fin)
+plt.imshow(array, cmap="gray")
+plt.show()
 # orientation states
 # edge length
 # edge motion
