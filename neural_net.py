@@ -3,7 +3,9 @@ import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 
-im = Image.open('emoticon.png')
+imagename = input("What is the image name? (with file extension)")
+
+im = Image.open(imagename)
 im_arr = np.array(im)
 print(im_arr.shape)
 
