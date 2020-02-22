@@ -1,5 +1,4 @@
-# weights need to be adjusted so that the total of the absolute value of all "on" weights is equal to 1
-# off neurons can have very large weights, but they only factor in to the weight mix when they fire
+import numpy.random as nprand
 
 neur_list = []
 neur_attr_list = []
@@ -17,14 +16,25 @@ class Neuron:
         Neuron.numNeur += 1
         neur_attr_list.append([self.index, self.weights, self.syns])
 
-    # @classmethod
+
     @staticmethod
     def activate(self):
         sum = 0
         # decay and addition, decay func is square root
         for x in range(0, self.index) and range(self.index + 1, len(self.syns)):
+            adj_weights = []
+            weight_tot = 0
+            for x in range(0, self.index) and range(self.index + 1, len(self.syns)):
+                if fires[x] == 1:
+                    adj_weights.append(self.weights[x])
+                    weight_tot += abs(self.weights[x])
+                else:
+                    adj_weights.append(0)
+            print(adj_weights)
+            adj_weights[x] = adj_weights[x] / weight_tot
+            print(adj_weights)
             self.syns[x] = (self.syns[x])**0.5
-            self.syns[x] = (self.syns[x]) + ((self.weights[x]) * (fires[x]))
+            self.syns[x] = (self.syns[x]) + ((adj_weights[x]) * (fires[x]))
             print(self.syns[x])
             sum += self.syns[x]
             print(sum)
@@ -48,16 +58,23 @@ class Neuron:
 
 # set neuron number and initial weights
 userNum = int(input("How many neurons do you want?"))
-initialWeights = float(input("What initial weight?"))
 cycles = int(input("How many cycles?"))
 
 # create neurons
 for x in range(0, userNum):
-    neur_list.append(Neuron(Neuron.numNeur, [initialWeights] * userNum, [0] * userNum))
+    print("neuron " + str(x))
+    print("What initial weight list? Must have " + str(userNum) + " items")
+    initialWeights = []
+    for z in range(0, userNum):
+        initialWeights.append(float(input("Weight for element " + str(z) + "? (from -1 to 1)")))
+    neur_list.append(Neuron(Neuron.numNeur, [initialWeights], [0] * userNum))
 
-# set initial firing pattern
+# set initial firing pattern (must be same length as numNeur)
 #fires = [0] * Neuron.numNeur
-fires = [0, 1, 0, 0, 1]
+#fires = [0, 1]
+fires = []
+for x in range(0,userNum):
+    fires.append(nprand.randint(0, 2, 1))
 
 # activate neurons
 for y in range(0, cycles):
