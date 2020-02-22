@@ -1,3 +1,6 @@
+# weights need to be adjusted so that the total of the absolute value of all "on" weights is equal to 1
+# off neurons can have very large weights, but they only factor in to the weight mix when they fire
+
 neur_list = []
 neur_attr_list = []
 attr = []
@@ -14,7 +17,8 @@ class Neuron:
         Neuron.numNeur += 1
         neur_attr_list.append([self.index, self.weights, self.syns])
 
-    @classmethod
+    # @classmethod
+    @staticmethod
     def activate(self):
         sum = 0
         # decay and addition, decay func is square root
@@ -49,15 +53,16 @@ cycles = int(input("How many cycles?"))
 
 # create neurons
 for x in range(0, userNum):
-    neur_list.append(Neuron(Neuron.numNeur, [initialWeights] * Neuron.numNeur, [0] * Neuron.numNeur))
+    neur_list.append(Neuron(Neuron.numNeur, [initialWeights] * userNum, [0] * userNum))
 
 # set initial firing pattern
 #fires = [0] * Neuron.numNeur
 fires = [0, 1, 0, 0, 1]
 
 # activate neurons
-for x in range(0, cycles):
-    Neuron.activate()
+for y in range(0, cycles):
+    for x in range(0, len(neur_list)):
+        Neuron.activate(neur_list[x])
 
 # print resulting neuron states
 for x in range(0, len(neur_list)):
