@@ -1,3 +1,6 @@
+# add locality/topology
+# add nonlinear weighting, so that it is more difficult for unconnected neurons to become connected
+
 import numpy.random as nprand
 
 neur_list = []
@@ -19,7 +22,7 @@ class Neuron:
     @staticmethod
     def activate(self):
         sum = 0
-        # decay and addition, decay func is square root
+        # decay and addition, decay func is *.25
         for x in [j for j in range(0, len(self.syns)) if j != self.index]:
             adj_weights = []
             weight_tot = 0
@@ -32,19 +35,21 @@ class Neuron:
             for k in range(0, len(adj_weights)):
                 if weight_tot > 0:
                     adj_weights[k] = adj_weights[k] / weight_tot
-                else:
-                    print("All weights are zero, amend threshold")
-            self.syns[x] = self.syns[x]**0.5
+            self.syns[x] = self.syns[x]*0.25
             self.syns[x] = self.syns[x] + ((adj_weights[x]) * (fires[x]))
             if self.syns[x] < 0:
                 self.syns[x] = 0
             sum += self.syns[x]
-        # firing
-        if sum >= threshold:
+        # firing, with refractory period of 1 cycle
+        if sum >= threshold and fires[self.index] == 0:
             fires[self.index] = 1
         else:
             fires[self.index] = 0
-        # learning, learning func is square/square root
+
+    # learning, learning func is square/square root
+
+    @staticmethod
+    def learn(self):
         for x in range(0, self.index) and range(self.index + 1, len(self.syns)):
             if fires[x] and fires[self.index] == 1:
                 if self.weights[x] >= 0:
@@ -62,10 +67,12 @@ class Neuron:
 userNum = int(input("How many neurons do you want?"))
 cycles = int(input("How many cycles?"))
 
-# create neurons
+# ~create neurons~
+# set initial weights
 for x in range(0, userNum):
     #print("What initial weight list? Must have " + str(userNum) + " items")
     initialWeights = []
+    #initialWeights = [0.5] * userNum
     for z in range(0, userNum):
         #initialWeights.append(float(input("Weight for element " + str(z) + "? (from -1 to 1)")))
         initialWeights.append(nprand.uniform(-1, 1))
@@ -84,9 +91,11 @@ print(fires)
 for y in range(0, cycles):
     for x in range(0, len(neur_list)):
         Neuron.activate(neur_list[x])
+        Neuron.learn(neur_list[x])
+    print(fires)
 
 # print resulting neuron states
 for x in range(0, len(neur_list)):
     attr.append([neur_list[x].index, neur_list[x].weights, neur_list[x].syns])
-print(attr)
+#print(attr)
 print(fires)
