@@ -24,10 +24,10 @@ class Neuron:
         for x in range(0, self.index) and range(self.index + 1, len(self.syns)):
             adj_weights = []
             weight_tot = 0
-            for x in range(0, self.index) and range(self.index + 1, len(self.syns)):
-                if fires[x] == 1:
-                    adj_weights.append(self.weights[x])
-                    weight_tot += abs(self.weights[x])
+            for q in range(0, self.index) and range(self.index + 1, Neuron.numNeur):
+                if fires[q] == 1:
+                    adj_weights.append(self.weights[q])
+                    weight_tot += abs(self.weights[q])
                 else:
                     adj_weights.append(0)
             print(adj_weights)
