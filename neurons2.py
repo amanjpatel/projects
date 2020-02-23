@@ -16,15 +16,15 @@ class Neuron:
         Neuron.numNeur += 1
         neur_attr_list.append([self.index, self.weights, self.syns])
 
-
     @staticmethod
     def activate(self):
         sum = 0
         # decay and addition, decay func is square root
-        for x in range(0, self.index) and range(self.index + 1, len(self.syns)):
+        for x in [j for j in range(0, len(self.syns)) if j != self.index]:
             adj_weights = []
             weight_tot = 0
-            for q in range(0, self.index) and range(self.index + 1, Neuron.numNeur):
+            for q in [p for p in range(0, len(self.syns)) if p != self.index]:
+                print(self.weights[q])
                 if fires[q] == 1:
                     adj_weights.append(self.weights[q])
                     weight_tot += abs(self.weights[q])
@@ -63,10 +63,11 @@ cycles = int(input("How many cycles?"))
 # create neurons
 for x in range(0, userNum):
     print("neuron " + str(x))
-    print("What initial weight list? Must have " + str(userNum) + " items")
+    #print("What initial weight list? Must have " + str(userNum) + " items")
     initialWeights = []
     for z in range(0, userNum):
-        initialWeights.append(float(input("Weight for element " + str(z) + "? (from -1 to 1)")))
+        #initialWeights.append(float(input("Weight for element " + str(z) + "? (from -1 to 1)")))
+        initialWeights.append(nprand.uniform(-1,1))
     neur_list.append(Neuron(Neuron.numNeur, [initialWeights], [0] * userNum))
 
 # set initial firing pattern (must be same length as numNeur)
