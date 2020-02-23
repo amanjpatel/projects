@@ -34,13 +34,11 @@ class Neuron:
                     adj_weights[k] = adj_weights[k] / weight_tot
                 else:
                     print("All weights are zero, amend threshold")
-            self.syns[x] = (self.syns[x])**0.5
+            self.syns[x] = self.syns[x]**0.5
             self.syns[x] = self.syns[x] + ((adj_weights[x]) * (fires[x]))
-            if self.syns[x] > 0:
+            if self.syns[x] < 0:
                 self.syns[x] = 0
-            print(self.syns[x])
             sum += self.syns[x]
-            #print(sum)
         # firing
         if sum >= threshold:
             fires[self.index] = 1
@@ -50,14 +48,14 @@ class Neuron:
         for x in range(0, self.index) and range(self.index + 1, len(self.syns)):
             if fires[x] and fires[self.index] == 1:
                 if self.weights[x] >= 0:
-                    self.weights[x] = (self.weights[x]) ** 0.5
+                    self.weights[x] = self.weights[x] ** 0.5
                 else:
                     self.weights[x] = -1 * ((abs(self.weights[x])) ** 0.5)
             elif fires[x] != fires[self.index]:
                 if self.weights[x] >= 0:
-                    self.weights[x] = (self.weights[x]) ** 2
+                    self.weights[x] = self.weights[x] ** 2
                 else:
-                    self.weights[x] = -1 * ((self.weights[x]) ** 2)
+                    self.weights[x] = -1 * (self.weights[x] ** 2)
 
 
 # set neuron number and initial weights
@@ -78,7 +76,9 @@ for x in range(0, userNum):
 #fires = [0, 1]
 fires = []
 for x in range(0, userNum):
-    fires.append(nprand.randint(0, 2, 1))
+    w = int(nprand.randint(0, 2, 1))
+    fires.append(w)
+print(fires)
 
 # activate neurons
 for y in range(0, cycles):
