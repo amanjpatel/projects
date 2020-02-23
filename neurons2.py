@@ -35,8 +35,12 @@ class Neuron:
                 else:
                     print("All weights are zero, amend threshold")
             self.syns[x] = (self.syns[x])**0.5
-            self.syns[x] = (self.syns[x]) + ((adj_weights[x]) * (fires[x]))
-            sum += float(self.syns[x])
+            self.syns[x] = self.syns[x] + ((adj_weights[x]) * (fires[x]))
+            if self.syns[x] > 0:
+                self.syns[x] = 0
+            print(self.syns[x])
+            sum += self.syns[x]
+            #print(sum)
         # firing
         if sum >= threshold:
             fires[self.index] = 1
@@ -66,14 +70,14 @@ for x in range(0, userNum):
     initialWeights = []
     for z in range(0, userNum):
         #initialWeights.append(float(input("Weight for element " + str(z) + "? (from -1 to 1)")))
-        initialWeights.append(nprand.uniform(-1,1))
+        initialWeights.append(nprand.uniform(-1, 1))
     neur_list.append(Neuron(Neuron.numNeur, initialWeights, [0] * userNum))
 
 # set initial firing pattern (must be same length as numNeur)
 #fires = [0] * Neuron.numNeur
 #fires = [0, 1]
 fires = []
-for x in range(0,userNum):
+for x in range(0, userNum):
     fires.append(nprand.randint(0, 2, 1))
 
 # activate neurons
