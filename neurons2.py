@@ -23,21 +23,20 @@ class Neuron:
         for x in [j for j in range(0, len(self.syns)) if j != self.index]:
             adj_weights = []
             weight_tot = 0
-            for q in [p for p in range(0, len(self.syns)) if p != self.index]:
-                print(self.weights[q])
+            for q in range(0, len(self.syns)):
                 if fires[q] == 1:
                     adj_weights.append(self.weights[q])
                     weight_tot += abs(self.weights[q])
                 else:
                     adj_weights.append(0)
-            print(adj_weights)
-            adj_weights[x] = adj_weights[x] / weight_tot
-            print(adj_weights)
+            for k in range(0, len(adj_weights)):
+                if weight_tot > 0:
+                    adj_weights[k] = adj_weights[k] / weight_tot
+                else:
+                    print("All weights are zero, amend threshold")
             self.syns[x] = (self.syns[x])**0.5
             self.syns[x] = (self.syns[x]) + ((adj_weights[x]) * (fires[x]))
-            print(self.syns[x])
-            sum += self.syns[x]
-            print(sum)
+            sum += float(self.syns[x])
         # firing
         if sum >= threshold:
             fires[self.index] = 1
@@ -56,19 +55,19 @@ class Neuron:
                 else:
                     self.weights[x] = -1 * ((self.weights[x]) ** 2)
 
+
 # set neuron number and initial weights
 userNum = int(input("How many neurons do you want?"))
 cycles = int(input("How many cycles?"))
 
 # create neurons
 for x in range(0, userNum):
-    print("neuron " + str(x))
     #print("What initial weight list? Must have " + str(userNum) + " items")
     initialWeights = []
     for z in range(0, userNum):
         #initialWeights.append(float(input("Weight for element " + str(z) + "? (from -1 to 1)")))
         initialWeights.append(nprand.uniform(-1,1))
-    neur_list.append(Neuron(Neuron.numNeur, [initialWeights], [0] * userNum))
+    neur_list.append(Neuron(Neuron.numNeur, initialWeights, [0] * userNum))
 
 # set initial firing pattern (must be same length as numNeur)
 #fires = [0] * Neuron.numNeur
@@ -86,3 +85,4 @@ for y in range(0, cycles):
 for x in range(0, len(neur_list)):
     attr.append([neur_list[x].index, neur_list[x].weights, neur_list[x].syns])
 print(attr)
+print(fires)
