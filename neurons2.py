@@ -1,9 +1,16 @@
 # add locality/topology
+# add layers
 # add nonlinear weighting, so that it is more difficult for unconnected neurons to become connected
+# add a more accurate decay function
+# synchronize timescales
+# (next major phase): organize neurons into homeostatic microcolumns
+# outstanding questions:
+#   1. How should the initial weights be defined, in order to preserve homeostasis?
+#   2. What form should the inputs take?
 
 import numpy.random as nprand
 
-# list of objects
+# list of neuron objects
 neur_list = []
 
 # list of all attributes of objects
@@ -17,7 +24,8 @@ class Neuron:
 
     # counter for number of neurons instantiated
     numNeur = 0
-    # constructor
+    # constructor for neuron, with an index, a weight list, and a synapse list
+    # Weight list contains all presynaptic weights, synapse list contains amount of neurotransmitter in each synapse
     def __init__(self, index, weights, syns):
         self.index = index
         self.weights = weights
@@ -29,7 +37,7 @@ class Neuron:
     def activate(self):
         # sum of all inputs
         sum = 0
-        # decay and addition, decay func is *.25
+        # decay and addition, decay function is *0.25
         for x in [j for j in range(0, len(self.syns)) if j != self.index]:
             # new list of weights adjusted to only include "on" presynaptic neurons
             adj_weights = []
